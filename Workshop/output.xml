@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 4.1 (Python 3.7.5 on win32)" generated="20210809 19:46:16.047" rpa="true" schemaversion="2">
+<suite id="s1" name="Tasks" source="c:\Users\jonej\Robots\Workshop\RobotThatOrders\tasks.robot">
+<test id="s1-t1" name="Order robots from RobotSpareBin Industries Inc">
+<kw name="CSV dialog">
+<kw name="Add heading" library="RPA.Dialogs">
+<arg>User information</arg>
+<arg>size=Small</arg>
+<doc>Add a centered heading text element</doc>
+<status status="PASS" starttime="20210809 19:46:17.652" endtime="20210809 19:46:17.653"/>
+</kw>
+<kw name="Add text input" library="RPA.Dialogs">
+<arg>CSVURL</arg>
+<arg>label=Url of the CSV</arg>
+<tag>input</tag>
+<doc>Add a text input element</doc>
+<status status="PASS" starttime="20210809 19:46:17.654" endtime="20210809 19:46:17.655"/>
+</kw>
+<kw name="Run dialog" library="RPA.Dialogs">
+<var>${result}</var>
+<tag>dialog</tag>
+<doc>Create a dialog from all the defined elements and block
+until the user has handled it.</doc>
+<msg timestamp="20210809 19:46:17.656" level="INFO">Protecting keyword: RPA.Dialogs.Run dialog</msg>
+<msg timestamp="20210809 19:46:30.454" level="INFO">Log level changed from NONE to INFO.</msg>
+<status status="PASS" starttime="20210809 19:46:17.655" endtime="20210809 19:46:30.454"/>
+</kw>
+<kw name="Download" library="RPA.HTTP">
+<arg>${result}[CSVURL]</arg>
+<arg>overwrite=true</arg>
+<doc>An alias for the ``HTTP Get`` keyword.</doc>
+<msg timestamp="20210809 19:46:30.454" level="INFO">Creating a new HTTP session</msg>
+<msg timestamp="20210809 19:46:30.454" level="INFO">Creating Session using : alias=rpasession_alias.httpsrobotsparebinindustries.com, url=https://robotsparebinindustries.com, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<msg timestamp="20210809 19:46:30.751" level="INFO">GET Request : url=https://robotsparebinindustries.com/orders.csv 
+ path_url=/orders.csv 
+ headers={'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210809 19:46:30.751" level="INFO">GET Response : url=https://robotsparebinindustries.com/orders.csv 
+ status=200, reason=OK 
+ headers={'Connection': 'keep-alive', 'Content-Length': '199', 'Server': 'GitHub.com', 'Content-Type': 'text/csv; charset=utf-8', 'Strict-Transport-Security': 'max-age=31556952', 'Last-Modified': 'Fri, 06 Nov 2020 08:53:42 GMT', 'Access-Control-Allow-Origin': '*', 'ETag': 'W/"5fa50f16-19c"', 'expires': 'Mon, 09 Aug 2021 17:56:30 GMT', 'Cache-Control': 'max-age=600', 'Content-Encoding': 'gzip', 'x-proxy-cache': 'MISS', 'X-GitHub-Request-Id': 'D232:794D:48B16:4A37D:611169F6', 'Accept-Ranges': 'bytes', 'Date': 'Mon, 09 Aug 2021 17:46:30 GMT', 'Via': '1.1 varnish', 'Age': '0', 'X-Served-By': 'cache-hhn4046-HHN', 'X-Cache': 'MISS', 'X-Cache-Hits': '0', 'X-Timer': 'S1628531191.510393,VS0,VE87', 'Vary': 'Accept-Encoding', 'X-Fastly-Request-ID': '762ad827ec10157e700b5d1b4884a42e7c123533'} 
+ body=Order number,Head,Body,Legs,Address
+1,1,2,3,Address 123
+2,4,1,5,Address 456
+3,6,2,3,Address 789
+4,2,3,2,Address 1
+5,3,5,1,Address 2
+6,1,6,6,Address 3
+7,5,1,5,Address 4
+8,2,3,3,Address 5
+9,3,2,2,Address 6
+10,4,4,2,Address 7
+11,6,6,1,Address 8
+12,1,3,3,Address 9
+13,1,5,4,Address A
+14,3,1,5,Address B
+15,3,2,6,Address C
+16,6,3,6,Address D
+17,5,4,1,Address E
+18,2,5,1,Address F
+19,4,6,2,Address G
+20,1,1,5,Address H 
+ </msg>
+<status status="PASS" starttime="20210809 19:46:30.454" endtime="20210809 19:46:30.751"/>
+</kw>
+<status status="PASS" starttime="20210809 19:46:17.651" endtime="20210809 19:46:30.751"/>
+</kw>
+<kw name="Open the robot order website">
+<kw name="Get Secret" library="RPA.Robocloud.Secrets">
+<var>${secret}</var>
+<arg>Robotsecret</arg>
+<doc>Read a secret from the configured source, e.g. Robocloud Vault,
+and return it as a ``Secret`` object.</doc>
+<msg timestamp="20210809 19:46:30.751" level="INFO">Protecting keyword: RPA.Robocloud.Secrets.Get Secret</msg>
+<msg timestamp="20210809 19:46:30.751" level="INFO">Log level changed from NONE to INFO.</msg>
+<status status="PASS" starttime="20210809 19:46:30.751" endtime="20210809 19:46:30.751"/>
+</kw>
+<kw name="Open Available Browser" library="RPA.Browser.Selenium">
+<arg>${secret}[websiteURL]</arg>
+<doc>Attempts to open a browser on the user's device from a set of
+supported browsers. Automatically downloads a corresponding webdriver
+if none is already installed.</doc>
+<msg timestamp="20210809 19:46:30.751" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<msg timestamp="20210809 19:46:30.766" level="INFO">Created download root directory: C:\Users\jonej\AppData\Local\robocorp\webdrivers</msg>
+<msg timestamp="20210809 19:46:30.766" level="INFO">Created symlink directory: C:\Users\jonej\AppData\Local\robocorp\webdrivers</msg>
+<msg timestamp="20210809 19:46:30.766" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<msg timestamp="20210809 19:46:32.414" level="INFO">Created Chrome browser with arguments: --disable-dev-shm-usage --disable-web-security --allow-running-insecure-content --no-sandbox</msg>
+<msg timestamp="20210809 19:46:32.414" level="INFO" html="true">&lt;p&gt;Attempted combinations:&lt;/p&gt;&lt;div class="doc"&gt;&lt;table&gt;&lt;tr&gt;&lt;th&gt;Browser&lt;/th&gt;&lt;th&gt;Download&lt;/th&gt;&lt;th&gt;Error&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Chrome&lt;/td&gt;&lt;td&gt;False&lt;/td&gt;&lt;td&gt;Message: 'chromedriver' executable needs to be in PATH. Please see https://sites.google.com/a/chromium.org/chromedriver/home
+&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Chrome&lt;/td&gt;&lt;td&gt;True&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</msg>
+<msg timestamp="20210809 19:46:32.414" level="INFO">Opening url 'https://robotsparebinindustries.com/#/robot-order'</msg>
+<status status="PASS" starttime="20210809 19:46:30.751" endtime="20210809 19:46:33.581"/>
+</kw>
+<kw name="Close Modal Box">
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>OK</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<msg timestamp="20210809 19:46:33.588" level="INFO">Clicking button 'OK'.</msg>
+<status status="PASS" starttime="20210809 19:46:33.587" endtime="20210809 19:46:33.677"/>
+</kw>
+<status status="PASS" starttime="20210809 19:46:33.583" endtime="20210809 19:46:33.678"/>
+</kw>
+<status status="PASS" starttime="20210809 19:46:30.751" endtime="20210809 19:46:33.678"/>
+</kw>
+<kw name="Fill the form from CSV file">
+<kw name="Read table from CSV" library="RPA.Tables">
+<var>${table}</var>
+<arg>orders.csv</arg>
+<arg>header=True</arg>
+<doc>Read a CSV file as a table.</doc>
+<msg timestamp="20210809 19:46:33.686" level="INFO">${table} = Table(columns=['Order number', 'Head', 'Body', 'Legs', 'Address'], rows=20)</msg>
+<status status="PASS" starttime="20210809 19:46:33.679" endtime="20210809 19:46:33.686"/>
+</kw>
+<for flavor="IN">
+<var>${table_row}</var>
+<value>@{table}</value>
+<iter>
+<var name="${table_row}">{'Order number': '1', 'Head': '1', 'Body': '2', 'Legs': '3', 'Address': 'Address 123'}</var>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>${GLOBAL_RETRY_AMOUNT}</arg>
+<arg>${GLOBAL_RETRY_INTERVAL}</arg>
+<arg>Fill the Form for One</arg>
+<arg>${table_row}</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Fill the Form for One">
+<arg>${table_row}</arg>
+<kw name="Select From List By Value" library="RPA.Browser.Selenium">
+<arg>id:head</arg>
+<arg>${table_row}[Head]</arg>
+<doc>Selects options from selection list ``locator`` by ``values``.</doc>
+<msg timestamp="20210809 19:46:33.689" level="INFO">Selecting options from selection list 'id:head' by value 1.</msg>
+<status status="PASS" starttime="20210809 19:46:33.689" endtime="20210809 19:46:33.766"/>
+</kw>
+<kw name="Select Radio Button" library="RPA.Browser.Selenium">
+<arg>body</arg>
+<arg>${table_row}[Body]</arg>
+<doc>Sets the radio button group ``group_name`` to ``value``.</doc>
+<msg timestamp="20210809 19:46:33.768" level="INFO">Selecting '2' from radio button 'body'.</msg>
+<status status="PASS" starttime="20210809 19:46:33.767" endtime="20210809 19:46:33.851"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>//*[@id="root"]/div/div[1]/div/div[1]/form/div[3]/input</arg>
+<arg>${table_row}[Legs]</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20210809 19:46:33.853" level="INFO">Typing text '3' into text field '//*[@id="root"]/div/div[1]/div/div[1]/form/div[3]/input'.</msg>
+<status status="PASS" starttime="20210809 19:46:33.852" endtime="20210809 19:46:33.969"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>id:address</arg>
+<arg>${table_row}[Address]</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<msg timestamp="20210809 19:46:33.970" level="INFO">Typing text 'Address 123' into text field 'id:address'.</msg>
+<status status="PASS" starttime="20210809 19:46:33.969" endtime="20210809 19:46:34.385"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:preview</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<msg timestamp="20210809 19:46:34.386" level="INFO">Clicking button 'id:preview'.</msg>
+<status status="PASS" starttime="20210809 19:46:34.385" endtime="20210809 19:46:34.476"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:order</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<msg timestamp="20210809 19:46:34.477" level="INFO">Clicking button 'id:order'.</msg>
+<status status="PASS" starttime="20210809 19:46:34.477" endtime="20210809 19:46:34.576"/>
+</kw>
+<kw name="Create Screenshot and PDF">
+<arg>${table_row}[Order number]</arg>
+<kw name="Wait Until Element Is Visible" library="RPA.Browser.Selenium">
+<arg>id:receipt</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" starttime="20210809 19:46:34.578" endtime="20210809 19:46:34.626"/>
+</kw>
+<kw name="Get Element Attribute" library="RPA.Browser.Selenium">
+<var>${receipt_html}</var>
+<arg>id:receipt</arg>
+<arg>outerHTML</arg>
+<doc>Returns the value of ``attribute`` from the element ``locator``.</doc>
+<msg timestamp="20210809 19:46:34.651" level="INFO">${receipt_html} = &lt;div id="receipt" class="alert alert-success" role="alert"&gt;&lt;h3&gt;Receipt&lt;/h3&gt;&lt;div&gt;2021-08-09T17:46:34.563Z&lt;/div&gt;&lt;p class="badge badge-success"&gt;RSB-ROBO-ORDER-4VFHVHWHM&lt;/p&gt;&lt;p&gt;Address 123&lt;/p&gt;&lt;div id="part...</msg>
+<status status="PASS" starttime="20210809 19:46:34.627" endtime="20210809 19:46:34.651"/>
+</kw>
+<kw name="Screenshot" library="RPA.Browser.Selenium">
+<arg>id:robot-preview-image</arg>
+<arg>c:\\Users\\jonej\\Robots\\Workshop\\RobotThatOrders${/}output${/}receipt${/}temps${/}${order_number}_image.png</arg>
+<doc>Capture page and/or element screenshot.</doc>
+<msg timestamp="20210809 19:46:34.822" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;img alt="screenshot" class="robot-seleniumlibrary-screenshot" src="data:image/png;base64,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" width="400px"&gt;</msg>
+<msg timestamp="20210809 19:46:34.938" level="INFO">Screenshot saved to file: c:\Users\jonej\Robots\Workshop\RobotThatOrders\output\receipt\temps\1_image.png</msg>
+<status status="PASS" starttime="20210809 19:46:34.653" endtime="20210809 19:46:34.938"/>
+</kw>
+<kw name="Html To Pdf" library="RPA.PDF">
+<arg>${receipt_html}</arg>
+<arg>c:\\Users\\jonej\\Robots\\Workshop\\RobotThatOrders${/}output${/}receipt${/}temps${/}${order_number}_html.pdf</arg>
+<doc>Generate a PDF file from HTML content.</doc>
+<msg timestamp="20210809 19:46:34.940" level="INFO">Writing output to file c:\Users\jonej\Robots\Workshop\RobotThatOrders\output\receipt\temps\1_html.pdf</msg>
+<status status="PASS" starttime="20210809 19:46:34.939" endtime="20210809 19:46:34.945"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${files}</var>
+<arg>c:\\Users\\jonej\\Robots\\Workshop\\RobotThatOrders${/}output${/}receipt${/}temps${/}${order_number}_html.pdf</arg>
+<arg>c:\\Users\\jonej\\Robots\\Workshop\\RobotThatOrders${/}output${/}receipt${/}temps${/}${order_number}_image.png</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20210809 19:46:34.947" level="INFO">${files} = ['c:\\Users\\jonej\\Robots\\Workshop\\RobotThatOrders\\output\\receipt\\temps\\1_html.pdf', 'c:\\Users\\jonej\\Robots\\Workshop\\RobotThatOrders\\output\\receipt\\temps\\1_image.png']</msg>
+<status status="PASS" starttime="20210809 19:46:34.946" endtime="20210809 19:46:34.947"/>
+</kw>
+<kw name="Add Files To Pdf" library="RPA.PDF">
+<arg>${files}</arg>
+<arg>c:\\Users\\jonej\\Robots\\Workshop\\RobotThatOrders${/}output${/}receipt${/}Fullorder${order_number}.pdf</arg>
+<doc>Add images and/or pdfs to new PDF document</doc>
+<msg timestamp="20210809 19:46:34.948" level="INFO">File c:\Users\jonej\Robots\Workshop\RobotThatOrders\output\receipt\temps\1_html.pdf type: None</msg>
+<msg timestamp="20210809 19:46:34.953" level="INFO">File c:\Users\jonej\Robots\Workshop\RobotThatOrders\output\receipt\temps\1_image.png type: png</msg>
+<msg timestamp="20210809 19:46:34.954" level="INFO">Image parameters: {}</msg>
+<status status="PASS" starttime="20210809 19:46:34.947" endtime="20210809 19:46:35.010"/>
+</kw>
+<status status="PASS" starttime="20210809 19:46:34.576" endtime="20210809 19:46:35.011"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:order-another</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<msg timestamp="20210809 19:46:35.011" level="INFO">Clicking button 'id:order-another'.</msg>
+<status status="PASS" starttime="20210809 19:46:35.011" endtime="20210809 19:46:35.405"/>
+</kw>
+<kw name="Close Modal Box">
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>OK</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<msg timestamp="20210809 19:46:35.407" level="INFO">Clicking button 'OK'.</msg>
+<status status="PASS" starttime="20210809 19:46:35.407" endtime="20210809 19:46:35.619"/>
+</kw>
+<status status="PASS" starttime="20210809 19:46:35.406" endtime="20210809 19:46:35.620"/>
+</kw>
+<status status="PASS" starttime="20210809 19:46:33.688" endtime="20210809 19:46:35.620"/>
+</kw>
+<status status="PASS" starttime="20210809 19:46:33.687" endtime="20210809 19:46:35.620"/>
+</kw>
+<status status="PASS" starttime="20210809 19:46:33.687" endtime="20210809 19:46:35.620"/>
+</iter>
+<iter>
+<var name="${table_row}">{'Order number': '2', 'Head': '4', 'Body': '1', 'Legs': '5', 'Address': 'Address 456'}</var>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>${GLOBAL_RETRY_AMOUNT}</arg>
+<arg>${GLOBAL_RETRY_INTERVAL}</arg>
+<arg>Fill the Form for One</arg>
+<arg>${table_row}</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="Fill the Form for One">
+<arg>${table_row}</arg>
+<kw name="Select From List By Value" library="RPA.Browser.Selenium">
+<arg>id:head</arg>
+<arg>${table_row}[Head]</arg>
+<doc>Selects options from selection list ``locator`` by ``values``.</doc>
+<msg timestamp="20210809 19:46:35.623" level="INFO">Selecting options from selection list 'id:head' by value 4.</msg>
+<kw name="Capture Page Screenshot" library="RPA.Browser.Selenium">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20210809 19:46:35.766" level="FAIL">NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<status status="FAIL" starttime="20210809 19:46:35.655" endtime="20210809 19:46:35.766"/>
+</kw>
+<msg timestamp="20210809 19:46:35.767" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<msg timestamp="20210809 19:46:35.912" level="FAIL">AttributeError: 'NoneType' object has no attribute 'lower'</msg>
+<status status="FAIL" starttime="20210809 19:46:35.622" endtime="20210809 19:46:35.918"/>
+</kw>
+<kw name="Select Radio Button" library="RPA.Browser.Selenium">
+<arg>body</arg>
+<arg>${table_row}[Body]</arg>
+<doc>Sets the radio button group ``group_name`` to ``value``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:35.920" endtime="20210809 19:46:35.920"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>//*[@id="root"]/div/div[1]/div/div[1]/form/div[3]/input</arg>
+<arg>${table_row}[Legs]</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:35.921" endtime="20210809 19:46:35.921"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>id:address</arg>
+<arg>${table_row}[Address]</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:35.922" endtime="20210809 19:46:35.922"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:preview</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:35.923" endtime="20210809 19:46:35.923"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:order</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:35.924" endtime="20210809 19:46:35.925"/>
+</kw>
+<kw name="Create Screenshot and PDF">
+<arg>${table_row}[Order number]</arg>
+<status status="NOT RUN" starttime="20210809 19:46:35.925" endtime="20210809 19:46:35.925"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:order-another</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:35.926" endtime="20210809 19:46:35.927"/>
+</kw>
+<kw name="Close Modal Box">
+<status status="NOT RUN" starttime="20210809 19:46:35.927" endtime="20210809 19:46:35.927"/>
+</kw>
+<status status="FAIL" starttime="20210809 19:46:35.622" endtime="20210809 19:46:35.929"/>
+</kw>
+<kw name="Fill the Form for One">
+<arg>${table_row}</arg>
+<kw name="Select From List By Value" library="RPA.Browser.Selenium">
+<arg>id:head</arg>
+<arg>${table_row}[Head]</arg>
+<doc>Selects options from selection list ``locator`` by ``values``.</doc>
+<msg timestamp="20210809 19:46:36.438" level="INFO">Selecting options from selection list 'id:head' by value 4.</msg>
+<kw name="Capture Page Screenshot" library="RPA.Browser.Selenium">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20210809 19:46:36.444" level="FAIL">NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<status status="FAIL" starttime="20210809 19:46:36.440" endtime="20210809 19:46:36.444"/>
+</kw>
+<msg timestamp="20210809 19:46:36.444" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<msg timestamp="20210809 19:46:36.447" level="FAIL">NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<status status="FAIL" starttime="20210809 19:46:36.437" endtime="20210809 19:46:36.447"/>
+</kw>
+<kw name="Select Radio Button" library="RPA.Browser.Selenium">
+<arg>body</arg>
+<arg>${table_row}[Body]</arg>
+<doc>Sets the radio button group ``group_name`` to ``value``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:36.448" endtime="20210809 19:46:36.448"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>//*[@id="root"]/div/div[1]/div/div[1]/form/div[3]/input</arg>
+<arg>${table_row}[Legs]</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:36.448" endtime="20210809 19:46:36.449"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>id:address</arg>
+<arg>${table_row}[Address]</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:36.449" endtime="20210809 19:46:36.449"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:preview</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:36.450" endtime="20210809 19:46:36.450"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:order</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:36.450" endtime="20210809 19:46:36.450"/>
+</kw>
+<kw name="Create Screenshot and PDF">
+<arg>${table_row}[Order number]</arg>
+<status status="NOT RUN" starttime="20210809 19:46:36.451" endtime="20210809 19:46:36.451"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:order-another</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:36.451" endtime="20210809 19:46:36.451"/>
+</kw>
+<kw name="Close Modal Box">
+<status status="NOT RUN" starttime="20210809 19:46:36.451" endtime="20210809 19:46:36.451"/>
+</kw>
+<status status="FAIL" starttime="20210809 19:46:36.436" endtime="20210809 19:46:36.453"/>
+</kw>
+<kw name="Fill the Form for One">
+<arg>${table_row}</arg>
+<kw name="Select From List By Value" library="RPA.Browser.Selenium">
+<arg>id:head</arg>
+<arg>${table_row}[Head]</arg>
+<doc>Selects options from selection list ``locator`` by ``values``.</doc>
+<msg timestamp="20210809 19:46:36.967" level="INFO">Selecting options from selection list 'id:head' by value 4.</msg>
+<kw name="Capture Page Screenshot" library="RPA.Browser.Selenium">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20210809 19:46:36.973" level="FAIL">NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<status status="FAIL" starttime="20210809 19:46:36.969" endtime="20210809 19:46:36.973"/>
+</kw>
+<msg timestamp="20210809 19:46:36.974" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<msg timestamp="20210809 19:46:36.976" level="FAIL">NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<status status="FAIL" starttime="20210809 19:46:36.967" endtime="20210809 19:46:36.976"/>
+</kw>
+<kw name="Select Radio Button" library="RPA.Browser.Selenium">
+<arg>body</arg>
+<arg>${table_row}[Body]</arg>
+<doc>Sets the radio button group ``group_name`` to ``value``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:36.977" endtime="20210809 19:46:36.977"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>//*[@id="root"]/div/div[1]/div/div[1]/form/div[3]/input</arg>
+<arg>${table_row}[Legs]</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:36.977" endtime="20210809 19:46:36.977"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>id:address</arg>
+<arg>${table_row}[Address]</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:36.978" endtime="20210809 19:46:36.978"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:preview</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:36.978" endtime="20210809 19:46:36.978"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:order</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:36.978" endtime="20210809 19:46:36.978"/>
+</kw>
+<kw name="Create Screenshot and PDF">
+<arg>${table_row}[Order number]</arg>
+<status status="NOT RUN" starttime="20210809 19:46:36.979" endtime="20210809 19:46:36.979"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:order-another</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:36.979" endtime="20210809 19:46:36.980"/>
+</kw>
+<kw name="Close Modal Box">
+<status status="NOT RUN" starttime="20210809 19:46:36.980" endtime="20210809 19:46:36.980"/>
+</kw>
+<status status="FAIL" starttime="20210809 19:46:36.966" endtime="20210809 19:46:36.981"/>
+</kw>
+<kw name="Fill the Form for One">
+<arg>${table_row}</arg>
+<kw name="Select From List By Value" library="RPA.Browser.Selenium">
+<arg>id:head</arg>
+<arg>${table_row}[Head]</arg>
+<doc>Selects options from selection list ``locator`` by ``values``.</doc>
+<msg timestamp="20210809 19:46:37.485" level="INFO">Selecting options from selection list 'id:head' by value 4.</msg>
+<kw name="Capture Page Screenshot" library="RPA.Browser.Selenium">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20210809 19:46:37.492" level="FAIL">NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<status status="FAIL" starttime="20210809 19:46:37.488" endtime="20210809 19:46:37.492"/>
+</kw>
+<msg timestamp="20210809 19:46:37.492" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<msg timestamp="20210809 19:46:37.495" level="FAIL">NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<status status="FAIL" starttime="20210809 19:46:37.484" endtime="20210809 19:46:37.495"/>
+</kw>
+<kw name="Select Radio Button" library="RPA.Browser.Selenium">
+<arg>body</arg>
+<arg>${table_row}[Body]</arg>
+<doc>Sets the radio button group ``group_name`` to ``value``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:37.496" endtime="20210809 19:46:37.497"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>//*[@id="root"]/div/div[1]/div/div[1]/form/div[3]/input</arg>
+<arg>${table_row}[Legs]</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:37.497" endtime="20210809 19:46:37.498"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>id:address</arg>
+<arg>${table_row}[Address]</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:37.498" endtime="20210809 19:46:37.498"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:preview</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:37.500" endtime="20210809 19:46:37.501"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:order</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:37.501" endtime="20210809 19:46:37.501"/>
+</kw>
+<kw name="Create Screenshot and PDF">
+<arg>${table_row}[Order number]</arg>
+<status status="NOT RUN" starttime="20210809 19:46:37.502" endtime="20210809 19:46:37.502"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:order-another</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:37.503" endtime="20210809 19:46:37.503"/>
+</kw>
+<kw name="Close Modal Box">
+<status status="NOT RUN" starttime="20210809 19:46:37.504" endtime="20210809 19:46:37.504"/>
+</kw>
+<status status="FAIL" starttime="20210809 19:46:37.481" endtime="20210809 19:46:37.505"/>
+</kw>
+<kw name="Fill the Form for One">
+<arg>${table_row}</arg>
+<kw name="Select From List By Value" library="RPA.Browser.Selenium">
+<arg>id:head</arg>
+<arg>${table_row}[Head]</arg>
+<doc>Selects options from selection list ``locator`` by ``values``.</doc>
+<msg timestamp="20210809 19:46:38.012" level="INFO">Selecting options from selection list 'id:head' by value 4.</msg>
+<kw name="Capture Page Screenshot" library="RPA.Browser.Selenium">
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<msg timestamp="20210809 19:46:38.020" level="FAIL">NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<status status="FAIL" starttime="20210809 19:46:38.014" endtime="20210809 19:46:38.020"/>
+</kw>
+<msg timestamp="20210809 19:46:38.021" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<msg timestamp="20210809 19:46:38.023" level="FAIL">NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<status status="FAIL" starttime="20210809 19:46:38.012" endtime="20210809 19:46:38.023"/>
+</kw>
+<kw name="Select Radio Button" library="RPA.Browser.Selenium">
+<arg>body</arg>
+<arg>${table_row}[Body]</arg>
+<doc>Sets the radio button group ``group_name`` to ``value``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:38.024" endtime="20210809 19:46:38.024"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>//*[@id="root"]/div/div[1]/div/div[1]/form/div[3]/input</arg>
+<arg>${table_row}[Legs]</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:38.024" endtime="20210809 19:46:38.024"/>
+</kw>
+<kw name="Input Text" library="RPA.Browser.Selenium">
+<arg>id:address</arg>
+<arg>${table_row}[Address]</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:38.025" endtime="20210809 19:46:38.025"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:preview</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:38.025" endtime="20210809 19:46:38.025"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:order</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:38.025" endtime="20210809 19:46:38.025"/>
+</kw>
+<kw name="Create Screenshot and PDF">
+<arg>${table_row}[Order number]</arg>
+<status status="NOT RUN" starttime="20210809 19:46:38.025" endtime="20210809 19:46:38.026"/>
+</kw>
+<kw name="Click Button" library="RPA.Browser.Selenium">
+<arg>id:order-another</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="NOT RUN" starttime="20210809 19:46:38.026" endtime="20210809 19:46:38.027"/>
+</kw>
+<kw name="Close Modal Box">
+<status status="NOT RUN" starttime="20210809 19:46:38.027" endtime="20210809 19:46:38.028"/>
+</kw>
+<status status="FAIL" starttime="20210809 19:46:38.010" endtime="20210809 19:46:38.030"/>
+</kw>
+<msg timestamp="20210809 19:46:38.030" level="FAIL">Keyword 'Fill the Form for One' failed after retrying 5 times. The last error was: NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<status status="FAIL" starttime="20210809 19:46:35.621" endtime="20210809 19:46:38.030"/>
+</kw>
+<status status="FAIL" starttime="20210809 19:46:35.621" endtime="20210809 19:46:38.031"/>
+</iter>
+<status status="FAIL" starttime="20210809 19:46:33.686" endtime="20210809 19:46:38.032"/>
+</for>
+<status status="FAIL" starttime="20210809 19:46:33.678" endtime="20210809 19:46:38.036"/>
+</kw>
+<kw name="Clear temps file">
+<status status="NOT RUN" starttime="20210809 19:46:38.036" endtime="20210809 19:46:38.036"/>
+</kw>
+<kw name="Zip all PDF">
+<status status="NOT RUN" starttime="20210809 19:46:38.036" endtime="20210809 19:46:38.037"/>
+</kw>
+<status status="FAIL" starttime="20210809 19:46:17.641" endtime="20210809 19:46:38.037">Keyword 'Fill the Form for One' failed after retrying 5 times. The last error was: NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</status>
+</test>
+<doc>Orders robots from RobotSpareBin Industries Inc.
+Saves the order HTML receipt as a PDF file.
+Saves the screenshot of the ordered robot.
+Embeds the screenshot of the robot to the PDF receipt.
+Creates ZIP archive of the receipts and the images.</doc>
+<status status="FAIL" starttime="20210809 19:46:16.047" endtime="20210809 19:46:38.038"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tasks</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Tasks">Tasks</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20210809 19:46:35.767" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<msg timestamp="20210809 19:46:36.444" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<msg timestamp="20210809 19:46:36.974" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<msg timestamp="20210809 19:46:37.492" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+<msg timestamp="20210809 19:46:38.021" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: NoSuchWindowException: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=92.0.4515.131)
+</msg>
+</errors>
+</robot>
